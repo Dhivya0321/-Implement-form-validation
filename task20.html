@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Validation</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    background:#fff;
+    width:400px;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#764ba2;
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    border:2px solid #ddd;
+    border-radius:8px;
+}
+
+.error{
+    color:red;
+    font-size:13px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#764ba2;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#5b3a8f;
+}
+
+.success{
+    color:green;
+    text-align:center;
+    margin-top:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Contact Form</h2>
+
+    <form id="myForm">
+        <div class="input-group">
+            <label>Name</label>
+            <input type="text" id="name">
+            <div class="error" id="nameError"></div>
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="text" id="email">
+            <div class="error" id="emailError"></div>
+        </div>
+
+        <div class="input-group">
+            <label>Message</label>
+            <textarea id="message"></textarea>
+            <div class="error" id="messageError"></div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="success" id="successMsg"></div>
+</div>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let message = document.getElementById("message").value.trim();
+
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("messageError").innerHTML = "";
+    document.getElementById("successMsg").innerHTML = "";
+
+    let valid = true;
+
+    if(name === ""){
+        document.getElementById("nameError").innerHTML = "Name is required";
+        valid = false;
+    }
+
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(email === ""){
+        document.getElementById("emailError").innerHTML = "Email is required";
+        valid = false;
+    } else if(!email.match(emailPattern)){
+        document.getElementById("emailError").innerHTML = "Enter a valid email";
+        valid = false;
+    }
+
+    if(message === ""){
+        document.getElementById("messageError").innerHTML = "Message is required";
+        valid = false;
+    }
+
+    if(valid){
+        document.getElementById("successMsg").innerHTML =
+        "✅ Form submitted successfully!";
+        document.getElementById("myForm").reset();
+    }
+});
+</script>
+
+</body>
+</html>
